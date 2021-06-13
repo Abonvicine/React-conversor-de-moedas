@@ -1,0 +1,11 @@
+.Input{
+    display: flex;
+    border: 1px solid black;
+    padding: 0.5rem;
+    height: 100%;
+    width: 15rem;
+
+    margin-left: 1rem;
+    border-radius: 2px;
+    background-color: gainsboro;
+}

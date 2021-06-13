@@ -1,0 +1,23 @@
+.mainButton{
+    display:flex;
+    align-items:center;
+    justify-content: space-evenly;
+    width: 4rem;
+    height: 2rem;
+    padding: 1.5rem 3rem;
+    font-size: 1rem;
+    margin:1rem;
+
+    background: #8110b3;
+    color: aliceblue;
+
+    border:none;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: opacity 200ms;
+}
+
+.mainButton:hover{
+    opacity: 90%;
+}
