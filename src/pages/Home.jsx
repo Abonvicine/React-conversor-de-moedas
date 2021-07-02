@@ -1,30 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../styles/home.css'
+import { fetchCurrencyAPI } from '../api/fetchAPI';
 
 export function Home(){
 
-    const fatoresDeConversao ={
-        real:{
-            real: 1.00,
-            dolar:0.20,
-            iene:22.45,
-            simbolo:"R$"
-        },
-        dolar:{
-            real:4.95,
-            dolar:1.00,
-            iene:110.78,
-            simbolo:"US$"
-        },
-        iene:{
-            real:0.045,
-            dolar:0.0090,
-            iene:1.00,
-            simbolo:"¥"
-        }
-    }
-
-    const [moedas,setMoedas] = useState(["real","dolar"]);
+    const [moedas,setMoedas] = useState(["BRL","USD"]);
     const [valor,setValor] = useState(1.00)
     const [valorConvertido,setValorConvertido] = useState(0.20)
     const [convertido,setConvertido] = useState(true)
@@ -52,8 +32,10 @@ export function Home(){
         setConvertido(false)
     }
 
-    function converterMoedas(){
-        const novoValor = valor*fatoresDeConversao[moedas[0]][moedas[1]];
+    async function converterMoedas(){
+        const data = await fetchCurrencyAPI(moedas[0],moedas[1])
+        const novoValor = valor*parseFloat(data);
+        console.log(data)
         setValorConvertido(novoValor)
         setConvertido(true)
     }
@@ -72,16 +54,16 @@ export function Home(){
                 <select 
                     name='moeda 1' id="primeira-moeda"
                     onChange = {mudarMoedas} value={moedas[0]}>
-                    <option value="dolar">Dólar</option>
-                    <option value="real">Real</option>
-                    <option value="iene">Iene</option>
+                    <option value="USD">Dólar</option>
+                    <option value="BRL">Real</option>
+                    <option value="JPY">Iene</option>
                 </select>
 
                 <select name='moeda 1' id="segunda-moeda"
                     onChange = {mudarMoedas} value={moedas[1]}>
-                    <option value="dolar">Dólar</option>
-                    <option value="real">Real</option>
-                    <option value="iene">Iene</option>
+                    <option value="USD">Dólar</option>
+                    <option value="BRL">Real</option>
+                    <option value="JPY">Iene</option>
                 </select>
                 
                 <button onClick = {inverterMoedas}>
@@ -99,7 +81,7 @@ export function Home(){
                     <input type="number" value={valor} onChange={atualizaValor}/>
                 {
                     convertido && (
-                        <span> Valor Convertido: {fatoresDeConversao[moedas[1]]["simbolo"]} {valorConvertido}</span> 
+                        <span> Valor Convertido: {moedas[1]} {valorConvertido}</span> 
                     )
                 }
             </div>
